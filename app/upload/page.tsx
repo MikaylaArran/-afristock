@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import { Upload, ImagePlus, X, CheckCircle, ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
 const REGIONS = [
   { value: "west-africa", label: "West Africa" },
@@ -25,10 +26,12 @@ const LICENSES = [
 
 export default function UploadPage() {
   const fileRef = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -40,18 +43,19 @@ export default function UploadPage() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleFile = (file: File) => {
-    if (!file.type.startsWith("image/")) return;
-    setFileName(file.name);
+  const handleFile = (f: File) => {
+    if (!f.type.startsWith("image/")) return;
+    setFile(f);
+    setFileName(f.name);
     const reader = new FileReader();
     reader.onload = (e) => setPreview(e.target?.result as string);
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(f);
   };
 
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
+    const f = e.dataTransfer.files[0];
+    if (f) handleFile(f);
   };
 
   const validate = () => {
@@ -59,7 +63,7 @@ export default function UploadPage() {
     if (!form.title.trim()) e.title = "Title is required";
     if (!form.region) e.region = "Please select a region";
     if (!form.country.trim()) e.country = "Country is required";
-    if (!preview) e.file = "Please upload an image";
+    if (!file) e.file = "Please upload an image";
     return e;
   };
 
@@ -68,31 +72,95 @@ export default function UploadPage() {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setErrors({});
+    setError(null);
     setLoading(true);
-    // Simulate upload
-    await new Promise((r) => setTimeout(r, 1800));
-    setLoading(false);
-    setSubmitted(true);
+
+    try {
+      // 1. Upload file to Supabase Storage
+      const ext = file!.name.split(".").pop();
+      const filePath = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("assets")
+        .upload(filePath, file!);
+
+      if (uploadError) throw uploadError;
+
+      // 2. Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from("assets")
+        .getPublicUrl(filePath);
+
+      // 3. Get image dimensions
+      const dimensions = await new Promise<{ width: number; height: number }>((resolve) => {
+        const img = new window.Image();
+        img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
+        img.src = preview!;
+      });
+
+      // 4. Save metadata to database
+      const { error: dbError } = await supabase.from("assets").insert({
+        title: form.title.trim(),
+        description: form.description.trim(),
+        region: form.region,
+        country: form.country.trim(),
+        tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
+        type: form.type,
+        license: form.license,
+        file_url: publicUrl,
+        preview_url: publicUrl,
+        width: dimensions.width,
+        height: dimensions.height,
+        downloads: 0,
+        is_approved: true, // auto-approve for now
+      });
+
+      if (dbError) throw dbError;
+
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "Upload failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
+
+  const reset = () => {
+    setSubmitted(false);
+    setPreview(null);
+    setFileName(null);
+    setFile(null);
+    setError(null);
+    setForm({ title: "", description: "", region: "", country: "", tags: "", type: "photo", license: "standard" });
+  };
 
   if (submitted) {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
         <CheckCircle size={56} className="text-[#2E6E48] mx-auto mb-6" />
         <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold text-[#2C1A0E] mb-3">
-          Submission received!
+          Upload successful!
         </h1>
         <p className="text-[#7A6050] mb-8">
-          Your asset is in review. We'll notify you once it's live on the platform — usually within 48 hours.
+          Your image is now live on AfriStock and available for download.
         </p>
-        <button
-          onClick={() => { setSubmitted(false); setPreview(null); setFileName(null); setForm({ title:"",description:"",region:"",country:"",tags:"",type:"photo",license:"standard" }); }}
-          className="bg-[#C85A1A] hover:bg-[#A8481A] text-white px-8 py-3 rounded-xl font-medium transition-colors"
-        >
-          Upload another
-        </button>
+        <div className="flex gap-3 justify-center">
+          <button
+            onClick={reset}
+            className="bg-[#C85A1A] hover:bg-[#A8481A] text-white px-8 py-3 rounded-xl font-medium transition-colors"
+          >
+            Upload another
+          </button>
+          
+          <a
+            href="/browse"
+            className="bg-[#2C1A0E] hover:bg-[#C85A1A] text-white px-8 py-3 rounded-xl font-medium transition-colors"
+          >
+            View gallery
+          </a>
+        </div>
       </div>
     );
   }
@@ -104,9 +172,15 @@ export default function UploadPage() {
           Contribute to AfriStock
         </h1>
         <p className="text-[#7A6050] mt-2">
-          Share your vision with the world. Earn from every download.
+          Share your vision with the world.
         </p>
       </div>
+
+      {error && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         {/* File drop zone */}
@@ -125,7 +199,7 @@ export default function UploadPage() {
                 <Image src={preview} alt="Preview" fill className="object-cover" />
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); setPreview(null); setFileName(null); }}
+                  onClick={(e) => { e.stopPropagation(); setPreview(null); setFileName(null); setFile(null); }}
                   className="absolute top-2 right-2 bg-white/90 rounded-full p-1 hover:bg-white transition-colors"
                 >
                   <X size={14} className="text-[#2C1A0E]" />
@@ -155,7 +229,6 @@ export default function UploadPage() {
 
         {/* Form fields */}
         <div className="lg:col-span-3 flex flex-col gap-5">
-          {/* Title */}
           <div>
             <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Title *</label>
             <input
@@ -169,7 +242,6 @@ export default function UploadPage() {
             {errors.title && <p className="text-xs text-red-500 mt-1">{errors.title}</p>}
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Description</label>
             <textarea
@@ -181,7 +253,6 @@ export default function UploadPage() {
             />
           </div>
 
-          {/* Region & Country */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Region *</label>
@@ -214,7 +285,6 @@ export default function UploadPage() {
             </div>
           </div>
 
-          {/* Tags */}
           <div>
             <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Tags</label>
             <input
@@ -226,7 +296,6 @@ export default function UploadPage() {
             />
           </div>
 
-          {/* Type & License */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Asset type</label>
@@ -256,7 +325,6 @@ export default function UploadPage() {
             </div>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
