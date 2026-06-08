@@ -141,7 +141,7 @@ export default function UploadPage() {
           Upload successful!
         </h1>
         <p className="text-[#6B7280] mb-8">
-          Your image is now live on AfriStock and available for download.
+          Your image is now live on Visura and available for download.
         </p>
         <div className="flex gap-3 justify-center">
           <button
@@ -150,6 +150,7 @@ export default function UploadPage() {
           >
             Upload another
           </button>
+          
           <a
             href="/browse"
             className="bg-[#003366] hover:bg-[#0057B8] text-white px-8 py-3 rounded-xl font-medium transition-colors"
@@ -165,7 +166,7 @@ export default function UploadPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[#003366]">
-          Contribute to AfriStock
+          Contribute to Visura
         </h1>
         <p className="text-[#6B7280] mt-2">Share your vision with the world.</p>
       </div>
