@@ -19,15 +19,15 @@ export default function HomePage() {
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
           <p className="text-[#A8C4E0] text-xs sm:text-sm font-medium tracking-widest uppercase mb-3 sm:mb-4">
-            The African Visual Library
+            The Global Visual Library
           </p>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6">
-            Authentic African visuals,<br />
+            Authentic visuals from Africa & India,<br />
             <span className="text-[#5BA3D9]">built for creators.</span>
           </h1>
           <p className="text-[#A8C4E0] text-base sm:text-lg max-w-xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-            Thousands of images from across 54 countries — licensed and ready to use.
-            Discover real Africa.
+            Thousands of free images from across Africa and India — licensed and ready to use.
+            Discover real culture.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -52,7 +52,7 @@ export default function HomePage() {
           {[
             { icon: <Camera size={18} />, value: "48K+", label: "Assets" },
             { icon: <Users size={18} />, value: "1,200", label: "Contributors" },
-            { icon: <Globe size={18} />, value: "54", label: "Countries" },
+            { icon: <Globe size={18} />, value: "55", label: "Countries" },
           ].map((s) => (
             <div key={s.label} className="flex flex-col items-center gap-1">
               <div className="text-[#0057B8] mb-1">{s.icon}</div>
@@ -145,11 +145,10 @@ export default function HomePage() {
       <section className="bg-[#F0F4F8] border-y border-[#D0DBE8]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#003366] mb-3 sm:mb-4">
-            Are you an African photographer?
+            Are you a photographer?
           </h2>
           <p className="text-[#6B7280] text-base sm:text-lg mb-6 sm:mb-8 max-w-xl mx-auto">
-            Share your work with the world and earn from every download.
-            Join 1,200+ contributors already on the platform.
+            Share your work with the world. Join 1,200+ contributors already on Visura.
           </p>
           <Link
             href="/upload"

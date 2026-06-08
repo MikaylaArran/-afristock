@@ -45,10 +45,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14 gap-4">
         <Link
           href="/"
-          className="text-xl font-bold text-[#003366] tracking-tight shrink-0"
+          className="text-xl font-bold tracking-tight shrink-0"
           style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
         >
-          Afri<span className="text-[#0057B8]">Stock</span>
+          <span className="text-[#003366]">Vi</span><span className="text-[#0057B8]">sura</span>
         </Link>
 
         {/* Search — hidden on mobile */}
