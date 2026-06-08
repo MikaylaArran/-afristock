@@ -146,15 +146,18 @@ export default async function AssetDetailPage({ params }: Props) {
           )}
 
           {/* Contributor */}
-          <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-[#E2D8C8]">
+          <Link
+            href={`/contributor/${contributorId}`}
+            className="flex items-center gap-3 p-4 bg-white rounded-xl border border-[#E2D8C8] hover:border-[#C85A1A] transition-colors"
+          >
             <div className="w-10 h-10 rounded-full bg-[#E2C89E] flex items-center justify-center text-sm font-medium text-[#7A5025] shrink-0">
               {contributorName.split(" ").map((n: string) => n[0]).join("")}
             </div>
             <div>
               <p className="text-sm font-medium text-[#2C1A0E]">{contributorName}</p>
-              <p className="text-xs text-[#A08060]">Contributor · {asset.country}</p>
+              <p className="text-xs text-[#A08060]">View profile →</p>
             </div>
-          </div>
+          </Link>
 
           {/* Free download */}
           <div className="mt-auto">
@@ -164,7 +167,7 @@ export default async function AssetDetailPage({ params }: Props) {
               </span>
               <span className="text-sm text-[#A08060] capitalize">{license} license</span>
             </div>
-            <DownloadButton url={previewUrl} title={asset.title} />
+            <DownloadButton url={previewUrl} title={asset.title} assetId={asset.id} />
             <p className="text-xs text-center text-[#A08060] mt-2">
               High-resolution · Free to use · Instant download
             </p>

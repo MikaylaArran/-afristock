@@ -1,13 +1,18 @@
 "use client";
 import { Download } from "lucide-react";
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
-export default function DownloadButton({ url, title }: { url: string; title: string }) {
+export default function DownloadButton({ url, title, assetId }: { url: string; title: string; assetId: string }) {
   const [loading, setLoading] = useState(false);
 
   async function handleDownload() {
     setLoading(true);
     try {
+      // Increment download counter
+      await supabase.rpc("increment_downloads", { asset_id: assetId });
+
+      // Trigger download
       const response = await fetch(url);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
