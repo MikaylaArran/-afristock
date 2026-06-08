@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     title: "Visura — Authentic African & Indian Visuals",
     description: "Thousands of free images from across Africa and India.",
     type: "website",
-    url: "https://afristock-lemon.vercel.app",
+    url: "https://visura.vercel.app",
     siteName: "Visura",
   },
   twitter: {
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: "Visura — Authentic African & Indian Visuals",
     description: "Thousands of free images from across Africa and India.",
   },
-  metadataBase: new URL("https://afristock-lemon.vercel.app"),
+  metadataBase: new URL("https://visura.vercel.app"),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
