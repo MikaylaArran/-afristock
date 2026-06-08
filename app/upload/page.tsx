@@ -137,23 +137,22 @@ export default function UploadPage() {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
         <CheckCircle size={56} className="text-[#2E6E48] mx-auto mb-6" />
-        <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold text-[#2C1A0E] mb-3">
+        <h1 className="text-3xl font-bold text-[#003366] mb-3">
           Upload successful!
         </h1>
-        <p className="text-[#7A6050] mb-8">
+        <p className="text-[#6B7280] mb-8">
           Your image is now live on AfriStock and available for download.
         </p>
         <div className="flex gap-3 justify-center">
           <button
             onClick={reset}
-            className="bg-[#C85A1A] hover:bg-[#A8481A] text-white px-8 py-3 rounded-xl font-medium transition-colors"
+            className="bg-[#0057B8] hover:bg-[#004A9E] text-white px-8 py-3 rounded-xl font-medium transition-colors"
           >
             Upload another
           </button>
-          
           <a
             href="/browse"
-            className="bg-[#2C1A0E] hover:bg-[#C85A1A] text-white px-8 py-3 rounded-xl font-medium transition-colors"
+            className="bg-[#003366] hover:bg-[#0057B8] text-white px-8 py-3 rounded-xl font-medium transition-colors"
           >
             View gallery
           </a>
@@ -165,10 +164,10 @@ export default function UploadPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
       <div className="mb-8">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold text-[#2C1A0E]">
+        <h1 className="text-3xl font-bold text-[#003366]">
           Contribute to AfriStock
         </h1>
-        <p className="text-[#7A6050] mt-2">Share your vision with the world.</p>
+        <p className="text-[#6B7280] mt-2">Share your vision with the world.</p>
       </div>
 
       {error && (
@@ -184,7 +183,7 @@ export default function UploadPage() {
             onDragOver={(e) => e.preventDefault()}
             onClick={() => fileRef.current?.click()}
             className={`relative cursor-pointer rounded-2xl border-2 border-dashed transition-colors overflow-hidden
-              ${preview ? "border-[#C85A1A]" : "border-[#E2D8C8] hover:border-[#C85A1A]"}
+              ${preview ? "border-[#0057B8]" : "border-[#D0DBE8] hover:border-[#0057B8]"}
               ${errors.file ? "border-red-400" : ""}`}
             style={{ minHeight: 280 }}
           >
@@ -196,7 +195,7 @@ export default function UploadPage() {
                   onClick={(e) => { e.stopPropagation(); setPreview(null); setFileName(null); setFile(null); }}
                   className="absolute top-2 right-2 bg-white/90 rounded-full p-1 hover:bg-white transition-colors"
                 >
-                  <X size={14} className="text-[#2C1A0E]" />
+                  <X size={14} className="text-[#1A1A1A]" />
                 </button>
                 <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-white text-xs p-2 truncate">
                   {fileName}
@@ -204,10 +203,10 @@ export default function UploadPage() {
               </>
             ) : (
               <div className="flex flex-col items-center justify-center h-full py-16 px-6 text-center">
-                <ImagePlus size={40} className="text-[#C4A882] mb-3" />
-                <p className="text-sm font-medium text-[#5C4A38]">Drag & drop your image</p>
-                <p className="text-xs text-[#A08060] mt-1">or click to browse</p>
-                <p className="text-xs text-[#C4A882] mt-3">JPEG, PNG, TIFF · min 4MP recommended</p>
+                <ImagePlus size={40} className="text-[#6B7280] mb-3" />
+                <p className="text-sm font-medium text-[#1A1A1A]">Drag & drop your image</p>
+                <p className="text-xs text-[#6B7280] mt-1">or click to browse</p>
+                <p className="text-xs text-[#6B7280] mt-3">JPEG, PNG, TIFF · min 4MP recommended</p>
               </div>
             )}
           </div>
@@ -223,97 +222,97 @@ export default function UploadPage() {
 
         <div className="lg:col-span-3 flex flex-col gap-5">
           <div>
-            <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Title *</label>
+            <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">Title *</label>
             <input
               type="text"
               value={form.title}
               onChange={(e) => set("title", e.target.value)}
               placeholder="e.g. Fishermen at dawn, Elmina"
               className={`w-full px-4 py-2.5 rounded-xl border bg-white text-sm outline-none transition-colors
-                focus:border-[#C85A1A] ${errors.title ? "border-red-400" : "border-[#E2D8C8]"}`}
+                focus:border-[#0057B8] ${errors.title ? "border-red-400" : "border-[#D0DBE8]"}`}
             />
             {errors.title && <p className="text-xs text-red-500 mt-1">{errors.title}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Description</label>
+            <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">Description</label>
             <textarea
               value={form.description}
               onChange={(e) => set("description", e.target.value)}
               rows={3}
               placeholder="Describe what's in the image, where it was taken, and the story behind it…"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E2D8C8] bg-white text-sm outline-none resize-none focus:border-[#C85A1A] transition-colors"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#D0DBE8] bg-white text-sm outline-none resize-none focus:border-[#0057B8] transition-colors"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Region *</label>
+              <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">Region *</label>
               <div className="relative">
                 <select
                   value={form.region}
                   onChange={(e) => set("region", e.target.value)}
-                  className={`w-full appearance-none px-4 py-2.5 rounded-xl border bg-white text-sm outline-none focus:border-[#C85A1A] transition-colors
-                    ${errors.region ? "border-red-400" : "border-[#E2D8C8]"}
-                    ${!form.region ? "text-[#C4A882]" : "text-[#2C1A0E]"}`}
+                  className={`w-full appearance-none px-4 py-2.5 rounded-xl border bg-white text-sm outline-none focus:border-[#0057B8] transition-colors
+                    ${errors.region ? "border-red-400" : "border-[#D0DBE8]"}
+                    ${!form.region ? "text-[#6B7280]" : "text-[#1A1A1A]"}`}
                 >
                   <option value="">Select region</option>
                   {REGIONS.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
                 </select>
-                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A08060] pointer-events-none" />
+                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
               </div>
               {errors.region && <p className="text-xs text-red-500 mt-1">{errors.region}</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Country *</label>
+              <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">Country *</label>
               <input
                 type="text"
                 value={form.country}
                 onChange={(e) => set("country", e.target.value)}
                 placeholder="e.g. Ghana"
-                className={`w-full px-4 py-2.5 rounded-xl border bg-white text-sm outline-none focus:border-[#C85A1A] transition-colors
-                  ${errors.country ? "border-red-400" : "border-[#E2D8C8]"}`}
+                className={`w-full px-4 py-2.5 rounded-xl border bg-white text-sm outline-none focus:border-[#0057B8] transition-colors
+                  ${errors.country ? "border-red-400" : "border-[#D0DBE8]"}`}
               />
               {errors.country && <p className="text-xs text-red-500 mt-1">{errors.country}</p>}
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Tags</label>
+            <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">Tags</label>
             <input
               type="text"
               value={form.tags}
               onChange={(e) => set("tags", e.target.value)}
               placeholder="market, street, people, Lagos (comma separated)"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E2D8C8] bg-white text-sm outline-none focus:border-[#C85A1A] transition-colors"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#D0DBE8] bg-white text-sm outline-none focus:border-[#0057B8] transition-colors"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">Asset type</label>
+              <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">Asset type</label>
               <div className="relative">
                 <select
                   value={form.type}
                   onChange={(e) => set("type", e.target.value)}
-                  className="w-full appearance-none px-4 py-2.5 rounded-xl border border-[#E2D8C8] bg-white text-sm text-[#2C1A0E] outline-none focus:border-[#C85A1A] transition-colors"
+                  className="w-full appearance-none px-4 py-2.5 rounded-xl border border-[#D0DBE8] bg-white text-sm text-[#1A1A1A] outline-none focus:border-[#0057B8] transition-colors"
                 >
                   {ASSET_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
                 </select>
-                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A08060] pointer-events-none" />
+                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#2C1A0E] mb-1.5">License</label>
+              <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">License</label>
               <div className="relative">
                 <select
                   value={form.license}
                   onChange={(e) => set("license", e.target.value)}
-                  className="w-full appearance-none px-4 py-2.5 rounded-xl border border-[#E2D8C8] bg-white text-sm text-[#2C1A0E] outline-none focus:border-[#C85A1A] transition-colors"
+                  className="w-full appearance-none px-4 py-2.5 rounded-xl border border-[#D0DBE8] bg-white text-sm text-[#1A1A1A] outline-none focus:border-[#0057B8] transition-colors"
                 >
                   {LICENSES.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
                 </select>
-                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A08060] pointer-events-none" />
+                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
               </div>
             </div>
           </div>
@@ -321,7 +320,7 @@ export default function UploadPage() {
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center justify-center gap-2 bg-[#C85A1A] hover:bg-[#A8481A] disabled:opacity-60 text-white py-3.5 rounded-xl font-medium transition-colors mt-2"
+            className="flex items-center justify-center gap-2 bg-[#0057B8] hover:bg-[#004A9E] disabled:opacity-60 text-white py-3.5 rounded-xl font-medium transition-colors mt-2"
           >
             {loading ? (
               <><span className="animate-spin inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full" /> Uploading…</>
@@ -330,9 +329,9 @@ export default function UploadPage() {
             )}
           </button>
 
-          <p className="text-xs text-[#A08060] text-center">
+          <p className="text-xs text-[#6B7280] text-center">
             By submitting, you confirm you own the rights to this content and agree to our{" "}
-            <a href="#" className="underline hover:text-[#C85A1A]">contributor terms</a>.
+            <a href="#" className="underline hover:text-[#0057B8]">contributor terms</a>.
           </p>
         </div>
       </form>

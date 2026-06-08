@@ -64,10 +64,10 @@ export default async function BrowsePage({ searchParams }: Props) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <div className="mb-8">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold text-[#2C1A0E] mb-2">
+        <h1 className="text-3xl font-bold text-[#003366] mb-2">
           {q ? `Results for "${q}"` : "Browse Images"}
         </h1>
-        <p className="text-[#7A6050] text-sm">
+        <p className="text-[#6B7280] text-sm">
           {assets.length} asset{assets.length !== 1 ? "s" : ""} found
         </p>
       </div>
@@ -88,9 +88,9 @@ export default async function BrowsePage({ searchParams }: Props) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-24 text-[#A08060]">
+        <div className="text-center py-24 text-[#6B7280]">
           <p className="text-5xl mb-4">🌍</p>
-          <p className="text-lg font-medium text-[#5C4A38]">No results found</p>
+          <p className="text-lg font-medium text-[#003366]">No results found</p>
           <p className="text-sm mt-1">Try different keywords or remove filters</p>
         </div>
       )}

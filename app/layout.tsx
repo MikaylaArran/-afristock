@@ -35,18 +35,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen bg-[#FBF6EE] text-[#2C1A0E] antialiased">
+      <body className="min-h-screen bg-white text-[#1A1A1A] antialiased" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
         <Navbar />
         <main>{children}</main>
-        <footer className="border-t border-[#E2D8C8] mt-20 py-10 text-center text-sm text-[#A08060]">
+        <footer className="border-t border-[#D0DBE8] mt-20 py-10 text-center text-sm text-[#6B7280]">
           <p>© {new Date().getFullYear()} AfriStock. Empowering African creators worldwide.</p>
         </footer>
       </body>

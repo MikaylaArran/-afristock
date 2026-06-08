@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const LICENSE_COLOURS: Record<string, string> = {
   standard: "bg-[#EAF0E8] text-[#2E6E48]",
-  extended: "bg-[#FBF0E2] text-[#C85A1A]",
-  editorial: "bg-[#E6EEF7] text-[#185FA5]",
+  extended: "bg-[#EFF4FF] text-[#0057B8]",
+  editorial: "bg-[#FFF4E5] text-[#B45309]",
 };
 
 export default function AssetCard({ asset }: { asset: Asset }) {
@@ -26,9 +26,9 @@ export default function AssetCard({ asset }: { asset: Asset }) {
   return (
     <Link
       href={`/browse/${asset.id}`}
-      className="group block rounded-xl overflow-hidden border border-[#E2D8C8] bg-white hover:shadow-md transition-shadow duration-200"
+      className="group block rounded-xl overflow-hidden border border-[#D0DBE8] bg-white hover:shadow-md transition-shadow duration-200"
     >
-      <div className={`relative ${heightClass} w-full bg-[#E8DECE] overflow-hidden`}>
+      <div className={`relative ${heightClass} w-full bg-[#F0F4F8] overflow-hidden`}>
         <Image
           src={previewUrl}
           alt={asset.title}
@@ -45,24 +45,24 @@ export default function AssetCard({ asset }: { asset: Asset }) {
         >
           {license}
         </span>
-        <span className="absolute top-2 right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2C1A0E] text-white">
+        <span className="absolute top-2 right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#003366] text-white">
           Free
         </span>
       </div>
 
       <div className="p-3">
-        <p className="text-sm font-medium text-[#2C1A0E] truncate">{asset.title}</p>
+        <p className="text-sm font-medium text-[#1A1A1A] truncate">{asset.title}</p>
         <div className="flex items-center justify-between mt-1.5">
-          <span className="flex items-center gap-1 text-xs text-[#A08060]">
+          <span className="flex items-center gap-1 text-xs text-[#6B7280]">
             <MapPin size={11} />
             {asset.country}
           </span>
-          <span className="flex items-center gap-1 text-xs text-[#A08060]">
+          <span className="flex items-center gap-1 text-xs text-[#6B7280]">
             <Download size={11} />
             {asset.downloads}
           </span>
         </div>
-        <p className="text-xs text-[#7A6050] mt-2 truncate">by {contributorName}</p>
+        <p className="text-xs text-[#6B7280] mt-2 truncate">by {contributorName}</p>
       </div>
     </Link>
   );

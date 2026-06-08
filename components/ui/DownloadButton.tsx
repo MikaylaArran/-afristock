@@ -9,10 +9,7 @@ export default function DownloadButton({ url, title, assetId }: { url: string; t
   async function handleDownload() {
     setLoading(true);
     try {
-      // Increment download counter
       await supabase.rpc("increment_downloads", { asset_id: assetId });
-
-      // Trigger download
       const response = await fetch(url);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
@@ -34,7 +31,7 @@ export default function DownloadButton({ url, title, assetId }: { url: string; t
     <button
       onClick={handleDownload}
       disabled={loading}
-      className="w-full flex items-center justify-center gap-2 bg-[#C85A1A] hover:bg-[#A8481A] disabled:opacity-60 text-white py-3.5 rounded-xl font-medium transition-colors"
+      className="w-full flex items-center justify-center gap-2 bg-[#0057B8] hover:bg-[#004A9E] disabled:opacity-60 text-white py-3.5 rounded-xl font-medium transition-colors"
     >
       <Download size={16} />
       {loading ? "Downloading..." : "Download Free"}
