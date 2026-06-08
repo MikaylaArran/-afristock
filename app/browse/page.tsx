@@ -33,11 +33,17 @@ async function getAssets(q?: string, region?: string, type?: string): Promise<As
 
     const { data, error } = await query;
 
-    if (error || !data || data.length === 0) {
-      return filterMock(q, region, type);
-    }
+    const realAssets = (!error && data) ? data as Asset[] : [];
+    const mockAssets = filterMock(q, region, type);
 
-    return data as Asset[];
+    // Combine real + mock, real first, no duplicates
+    const realIds = new Set(realAssets.map((a) => a.id));
+    const combined = [
+      ...realAssets,
+      ...mockAssets.filter((a) => !realIds.has(a.id)),
+    ];
+
+    return combined;
   } catch {
     return filterMock(q, region, type);
   }
