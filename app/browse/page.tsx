@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import { MOCK_ASSETS } from "@/lib/mock-data";
 import { supabase } from "@/lib/supabase";
 import AssetCard from "@/components/ui/AssetCard";
-import SearchBar from "@/components/ui/SearchBar";
 import FilterBar from "@/components/ui/FilterBar";
 import { Asset, Region, AssetType } from "@/types";
 
@@ -63,7 +62,7 @@ export default async function BrowsePage({ searchParams }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-3xl font-bold text-[#003366] mb-2">
           {q ? `Results for "${q}"` : "Browse Images"}
         </h1>
@@ -73,9 +72,6 @@ export default async function BrowsePage({ searchParams }: Props) {
       </div>
 
       <Suspense>
-        <div className="mb-6">
-          <SearchBar />
-        </div>
         <div className="mb-8">
           <FilterBar />
         </div>

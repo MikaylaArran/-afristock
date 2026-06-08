@@ -25,7 +25,7 @@ export default function FilterBar() {
     <div className="flex flex-wrap gap-4 items-center">
       {/* Region filter */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-xs font-medium text-[#A08060] uppercase tracking-wide">Region</span>
+        <span className="text-xs font-medium text-[#6B7280] uppercase tracking-wide">Region</span>
         <div className="flex gap-1.5 flex-wrap">
           {REGIONS.map((r) => (
             <button
@@ -33,8 +33,8 @@ export default function FilterBar() {
               onClick={() => update("region", r.value)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors
                 ${currentRegion === r.value
-                  ? "bg-[#C85A1A] text-white"
-                  : "bg-white border border-[#E2D8C8] text-[#5C4A38] hover:border-[#C85A1A] hover:text-[#C85A1A]"
+                  ? "bg-[#0057B8] text-white"
+                  : "bg-white border border-[#D0DBE8] text-[#1A1A1A] hover:border-[#0057B8] hover:text-[#0057B8]"
                 }`}
             >
               {r.label}
@@ -45,7 +45,7 @@ export default function FilterBar() {
 
       {/* Type filter */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-xs font-medium text-[#A08060] uppercase tracking-wide">Type</span>
+        <span className="text-xs font-medium text-[#6B7280] uppercase tracking-wide">Type</span>
         <div className="flex gap-1.5 flex-wrap">
           {ASSET_TYPES.map((t) => (
             <button
@@ -53,8 +53,8 @@ export default function FilterBar() {
               onClick={() => update("type", t.value)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors
                 ${currentType === t.value
-                  ? "bg-[#2C1A0E] text-white"
-                  : "bg-white border border-[#E2D8C8] text-[#5C4A38] hover:border-[#2C1A0E] hover:text-[#2C1A0E]"
+                  ? "bg-[#003366] text-white"
+                  : "bg-white border border-[#D0DBE8] text-[#1A1A1A] hover:border-[#003366] hover:text-[#003366]"
                 }`}
             >
               {t.label}

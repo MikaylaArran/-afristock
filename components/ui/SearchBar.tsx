@@ -29,20 +29,20 @@ export default function SearchBar() {
 
   return (
     <form onSubmit={submit} className="relative w-full max-w-xl">
-      <div className="flex items-center bg-white border border-[#E2D8C8] rounded-xl shadow-sm overflow-hidden focus-within:border-[#C85A1A] transition-colors">
-        <Search size={16} className="ml-4 text-[#A08060] flex-shrink-0" />
+      <div className="flex items-center bg-white border border-[#D0DBE8] rounded-xl shadow-sm overflow-hidden focus-within:border-[#0057B8] transition-colors">
+        <Search size={16} className="ml-4 text-[#6B7280] flex-shrink-0" />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search images, places, culture…"
-          className="flex-1 px-3 py-3 text-sm bg-transparent outline-none text-[#2C1A0E] placeholder:text-[#C4A882]"
+          className="flex-1 px-3 py-3 text-sm bg-transparent outline-none text-[#1A1A1A] placeholder:text-[#6B7280]"
         />
         {query && (
           <button
             type="button"
             onClick={clear}
-            className="mr-2 p-1 rounded-full text-[#A08060] hover:text-[#2C1A0E] transition-colors"
+            className="mr-2 p-1 rounded-full text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
             aria-label="Clear search"
           >
             <X size={14} />
@@ -50,7 +50,7 @@ export default function SearchBar() {
         )}
         <button
           type="submit"
-          className="m-1.5 px-4 py-2 bg-[#C85A1A] text-white text-sm font-medium rounded-lg hover:bg-[#A8481A] transition-colors"
+          className="m-1.5 px-4 py-2 bg-[#0057B8] text-white text-sm font-medium rounded-lg hover:bg-[#004A9E] transition-colors"
         >
           Search
         </button>
