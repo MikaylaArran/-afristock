@@ -1,0 +1,38 @@
+"use client";
+import { Download } from "lucide-react";
+import { useState } from "react";
+
+export default function DownloadButton({ url, title }: { url: string; title: string }) {
+  const [loading, setLoading] = useState(false);
+
+  async function handleDownload() {
+    setLoading(true);
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = `${title.replace(/\s+/g, "-").toLowerCase()}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch {
+      alert("Download failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <button
+      onClick={handleDownload}
+      disabled={loading}
+      className="w-full flex items-center justify-center gap-2 bg-[#C85A1A] hover:bg-[#A8481A] disabled:opacity-60 text-white py-3.5 rounded-xl font-medium transition-colors"
+    >
+      <Download size={16} />
+      {loading ? "Downloading..." : "Download Free"}
+    </button>
+  );
+}

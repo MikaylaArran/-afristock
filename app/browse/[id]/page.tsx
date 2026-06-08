@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Download, MapPin, Tag, ArrowLeft, Calendar } from "lucide-react";
+import DownloadButton from "@/components/ui/DownloadButton";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -163,9 +164,7 @@ export default async function AssetDetailPage({ params }: Props) {
               </span>
               <span className="text-sm text-[#A08060] capitalize">{license} license</span>
             </div>
-            <button className="w-full flex items-center justify-center gap-2 bg-[#C85A1A] hover:bg-[#A8481A] text-white py-3.5 rounded-xl font-medium transition-colors">
-              <Download size={16} /> Download Free
-            </button>
+            <DownloadButton url={previewUrl} title={asset.title} />
             <p className="text-xs text-center text-[#A08060] mt-2">
               High-resolution · Free to use · Instant download
             </p>
