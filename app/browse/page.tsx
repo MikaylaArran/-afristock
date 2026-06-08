@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Browse Images",
+  description: "Search and download thousands of free authentic African images.",
+};
+
 import { Suspense } from "react";
 import { MOCK_ASSETS } from "@/lib/mock-data";
 import { supabase } from "@/lib/supabase";

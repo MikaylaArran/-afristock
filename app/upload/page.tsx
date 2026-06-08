@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contribute",
+  description: "Upload your African photography and share it with the world.",
+};
+
 "use client";
 import { useState, useRef } from "react";
 import { Upload, ImagePlus, X, CheckCircle, ChevronDown } from "lucide-react";
