@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { MOCK_ASSETS } from "@/lib/mock-data";
+import { supabase } from "@/lib/supabase";
 import AssetCard from "@/components/ui/AssetCard";
 import SearchBar from "@/components/ui/SearchBar";
 import FilterBar from "@/components/ui/FilterBar";
@@ -9,10 +10,37 @@ interface Props {
   searchParams: Promise<{ q?: string; region?: string; type?: string }>;
 }
 
-export default async function BrowsePage({ searchParams }: Props) {
-  const { q, region, type } = await searchParams;
+async function getAssets(q?: string, region?: string, type?: string): Promise<Asset[]> {
+  try {
+    let query = supabase
+      .from("assets")
+      .select(`*, profiles(username, full_name, avatar_url)`)
+      .eq("is_approved", true)
+      .order("created_at", { ascending: false });
 
-  const filtered = MOCK_ASSETS.filter((a: Asset) => {
+    if (q) {
+      query = query.or(
+        `title.ilike.%${q}%,description.ilike.%${q}%,country.ilike.%${q}%`
+      );
+    }
+    if (region) query = query.eq("region", region);
+    if (type) query = query.eq("type", type);
+
+    const { data, error } = await query;
+
+    // If no data yet, fall back to mock data
+    if (error || !data || data.length === 0) {
+      return filterMock(q, region, type);
+    }
+
+    return data as Asset[];
+  } catch {
+    return filterMock(q, region, type);
+  }
+}
+
+function filterMock(q?: string, region?: string, type?: string): Asset[] {
+  return MOCK_ASSETS.filter((a: Asset) => {
     const matchQ = q
       ? a.title.toLowerCase().includes(q.toLowerCase()) ||
         a.tags.some((t) => t.toLowerCase().includes(q.toLowerCase())) ||
@@ -22,6 +50,11 @@ export default async function BrowsePage({ searchParams }: Props) {
     const matchType = type ? a.type === (type as AssetType) : true;
     return matchQ && matchRegion && matchType;
   });
+}
+
+export default async function BrowsePage({ searchParams }: Props) {
+  const { q, region, type } = await searchParams;
+  const assets = await getAssets(q, region, type);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
@@ -31,7 +64,7 @@ export default async function BrowsePage({ searchParams }: Props) {
           {q ? `Results for "${q}"` : "Browse Images"}
         </h1>
         <p className="text-[#7A6050] text-sm">
-          {filtered.length} asset{filtered.length !== 1 ? "s" : ""} found
+          {assets.length} asset{assets.length !== 1 ? "s" : ""} found
         </p>
       </div>
 
@@ -40,16 +73,15 @@ export default async function BrowsePage({ searchParams }: Props) {
         <div className="mb-6">
           <SearchBar />
         </div>
-        {/* Filters */}
         <div className="mb-8">
           <FilterBar />
         </div>
       </Suspense>
 
       {/* Grid */}
-      {filtered.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filtered.map((asset) => (
+      {assets.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+          {assets.map((asset) => (
             <AssetCard key={asset.id} asset={asset} />
           ))}
         </div>

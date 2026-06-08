@@ -14,6 +14,16 @@ export default function AssetCard({ asset }: { asset: Asset }) {
   const aspect = asset.height / asset.width;
   const heightClass = aspect > 1.2 ? "h-64" : aspect < 0.7 ? "h-40" : "h-52";
 
+  // Handle both mock data and real Supabase data shapes
+  const contributorName =
+    asset.contributorName ||
+    (asset as any).profiles?.full_name ||
+    (asset as any).profiles?.username ||
+    "Contributor";
+
+  const previewUrl = asset.previewUrl || (asset as any).preview_url || "";
+  const license = asset.license || "standard";
+
   return (
     <Link
       href={`/browse/${asset.id}`}
@@ -21,20 +31,24 @@ export default function AssetCard({ asset }: { asset: Asset }) {
     >
       <div className={`relative ${heightClass} w-full bg-[#E8DECE] overflow-hidden`}>
         <Image
-          src={asset.previewUrl}
+          src={previewUrl}
           alt={asset.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
         <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200">
           <p className="text-white text-xs font-medium truncate">{asset.title}</p>
         </div>
         <span
-          className={`absolute top-2 left-2 text-[10px] font-medium px-2 py-0.5 rounded-full capitalize ${LICENSE_COLOURS[asset.license]}`}
+          className={`absolute top-2 left-2 text-[10px] font-medium px-2 py-0.5 rounded-full capitalize ${LICENSE_COLOURS[license]}`}
         >
-          {asset.license}
+          {license}
+        </span>
+        {/* Free badge */}
+        <span className="absolute top-2 right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2C1A0E] text-white">
+          Free
         </span>
       </div>
 
@@ -50,12 +64,7 @@ export default function AssetCard({ asset }: { asset: Asset }) {
             {asset.downloads}
           </span>
         </div>
-        <div className="flex items-center justify-between mt-2">
-          <span className="text-xs text-[#7A6050]">by {asset.contributorName}</span>
-          <span className="text-sm font-medium text-[#C85A1A]">
-            ${(asset.price / 100).toFixed(2)}
-          </span>
-        </div>
+        <p className="text-xs text-[#7A6050] mt-2 truncate">by {contributorName}</p>
       </div>
     </Link>
   );
