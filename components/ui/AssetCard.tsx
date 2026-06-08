@@ -14,7 +14,6 @@ export default function AssetCard({ asset }: { asset: Asset }) {
   const aspect = asset.height / asset.width;
   const heightClass = aspect > 1.2 ? "h-64" : aspect < 0.7 ? "h-40" : "h-52";
 
-  // Handle both mock data and real Supabase data shapes
   const contributorName =
     asset.contributorName ||
     (asset as any).profiles?.full_name ||
@@ -46,7 +45,6 @@ export default function AssetCard({ asset }: { asset: Asset }) {
         >
           {license}
         </span>
-        {/* Free badge */}
         <span className="absolute top-2 right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2C1A0E] text-white">
           Free
         </span>
